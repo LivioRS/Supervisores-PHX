@@ -251,6 +251,11 @@ textarea{resize:vertical;min-height:72px;}
     </div>
   </div>
   <div class="topbar-right">
+    <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-right:12px">
+      <button id="btnSyncCloud" class="btn">☁️ Sincronizar</button>
+      <button id="btnImportarLocais" class="btn">📥 Importar local</button>
+      <button id="btnExportarFollows" class="btn">📤 Exportar follows</button>
+    </div>
     <div class="topbar-stat">
       <div class="val" id="tn">–</div>
       <div class="lbl">Inativos</div>
@@ -915,6 +920,14 @@ async function init(){
   S.clientes=data;
   document.getElementById('main').innerHTML='';
   render();
+  setTimeout(()=>{
+    const b1=document.getElementById('btnSyncCloud');
+    const b2=document.getElementById('btnImportarLocais');
+    const b3=document.getElementById('btnExportarFollows');
+    if(b1)b1.onclick=()=>syncToCloud(true).catch(e=>alert('Erro ao sincronizar: '+e.message));
+    if(b2)b2.onclick=()=>importarLocalParaCloud().catch(e=>alert('Erro ao importar: '+e.message));
+    if(b3)b3.onclick=()=>exportFollowupsJSON();
+  },0);
 }
 init();
 </script>
